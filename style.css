@@ -1,0 +1,51 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+}
+
+.board {
+    width: 876px;
+    height: 580px;
+    background-color: #6cf;
+    margin: 0 auto;
+}
+
+.title {
+    text-align: center;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 300;
+}
+
+.instruction {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.clock {
+    text-align: center;
+    font-size: 2.2rem;
+}
+
+.cards {
+    display: flex;
+    justify-content: space-between;
+    /* flex-direction: row; */
+    flex-wrap: wrap;
+    width: 630px;
+    height: 340px;
+    margin: 0 auto;
+
+}
+
+.card {
+    width: 116px;
+    height: 158px;
+    border-radius: 5px;
+    background-color: #fff;
+}
