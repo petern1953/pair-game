@@ -37,7 +37,12 @@ const cardPack = {
         return card.getAttribute('class').endsWith('bg');
     },
     started: false,
+    turnedUpPair: [null, null],
     flipCard(event) {
+        if (!this.started) {
+            this.startCounter();
+            this.started = true;
+        }
         const card = event.target;
         if (this.turnedDown(card)) {
             card.setAttribute('class', `card ${this[card.dataset.n]}`);
@@ -45,12 +50,21 @@ const cardPack = {
             card.setAttribute('class', 'card card--bg');
         }
     },
-    turnedUpPair: [null, null],
     isPair() {
         return true;
     },
     fixPair() {
 
+    },
+    counter: 0,
+    intervalId: null,
+    startCounter() {
+        this.counter = 0;
+        // displayTime(timeNow.toTimeString('hu').slice(0, 8));
+        this.intevalId = setInterval(function () { console.log(this.counter++) }, 1000);
+    },
+    stopCounter() {
+        clearInterval(this.intevalId)
     }
 }
 
