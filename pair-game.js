@@ -37,6 +37,7 @@ const cardPack = {
         return card.getAttribute('class').endsWith('bg');
     },
     started: false,
+    clicks: 0,
     turnedUpPair: [null, null],
     flipCard(event) {
         if (!this.started) {
@@ -44,6 +45,13 @@ const cardPack = {
             this.started = true;
         }
         const card = event.target;
+
+        if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
+            // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
+            // ha másikra, össze kell hasonlítani
+            // ha egyeznek, le kell venni róluk az eventHandlert
+        }
+        // this.clicks += 1;
         if (this.turnedDown(card)) {
             card.setAttribute('class', `card ${this[card.dataset.n]}`);
         } else {
@@ -53,8 +61,9 @@ const cardPack = {
     isPair() {
         return true;
     },
+    // toDO ezt kijavítani
     fixPair() {
-
+        console.log(this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
     },
     intervalId: null,
     startCounter() {
