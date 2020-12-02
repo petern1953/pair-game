@@ -59,29 +59,21 @@ const cardPack = {
     intervalId: null,
     startCounter() {
         let counter = 0;
-        // const elapsedTime = new Date(1970, 1, 1, 0, 0, 0);
-        // displayTime(timeNow.toTimeString('hu').slice(0, 8));
         let clock = document.querySelector('.clock');
         this.intervalId = setInterval(() => {
-            //     elapsedTime.setMilliseconds(counter * 1000);
-            // let timeString = elapsedTime.toTimeString().substr(3, 5);
-            // console.log(elapsedTime.toTimeString().substr(3, 5));
-            //     console.log(elapsedTime.toTimeString().slice(0, 5));
-            // let timeString = `(${Math.floor((counter / 60) % 60).toString().padStart(2, 0)}):${(counter % 60)}`
-            // let timeString = `${`${Math.floor((counter / 60) % 60)}`.padStart(2, 0)}:${(counter % 60).toString().padStart(2, 0)}`;
             let timeString = `${`${Math.floor((counter / 60) % 60)}`.padStart(2, 0)}:${`${(counter % 60)}`.padStart(2, 0)}`;
             clock.textContent = timeString;
-            console.log(timeString);
             counter++;
         }, 1000)
 
     },
-
-    // console.log((1000 * counter++).toTimeString('hu').slice(0, 8));
-    // },
     stopCounter() {
         clearInterval(this.intervalId);
     },
+    resetCounter() {
+        let clock = document.querySelector('.clock');
+        clock.textContent = '00:00';
+    }
 }
 
 cardPack.cards = document.querySelectorAll('.card');
