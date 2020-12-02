@@ -32,13 +32,18 @@ const cardPack = {
     show() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
     hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     newArrangement() { this.shuffle(10); this.show(); },
+    flipCard(event) {
+        const card = event.target; console.log(card);
+        (card.getAttribute('class').endsWith('bg')) ?
+            card.setAttribute('class', `card ${cardPack[card.dataset.n]}`) : card.setAttribute('class', 'card card--bg');
+    }
 }
 
 cardPack.cards = document.querySelectorAll('.card');
 
-// const displayCardPack = (cards) => {
-//     cards.forEach((card, idx) => card.setAttribute('class', `card ${cardPack[idx]}`));
-// }
+cardPack.cards.forEach((card) => card.addEventListener('click', (event) => cardPack.flipCard(event)));
+
+// const log = (event) => console.log(cardPack[event.target.dataset.n]);
 
 // const hideCardPack = (cards) => {
 //     cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg'));
@@ -50,7 +55,13 @@ cardPack.cards = document.querySelectorAll('.card');
 //     displayCardPack(cards);
 // }
 
-const flipCard = (card) => {
-    card.getAttribute('class');
+// const flipCard = (card) => {
+//     (card.getAttribute('class').endsWith('--bg')) ?
+//         card.setAttribute('class', `card ${this[idx]}`) : card.setAttribute('class', 'card card--bg');
+// }
+// const log = card => (card.getAttribute('class').endsWith('--bg')) ?
+//     card.setAttribute('class', `card ${this[card.dataset.n]}`) : card.setAttribute('class', 'card card--bg');
+// cardPack.cards.forEach((card) => card.addEventListener('click', cardPack.flipCard(card)));
+// cardPack.cards.forEach((card) => log(card));
 
-}
+// cardPack.cards[0].addEventListener('click', () => cardPack.flipCard);
