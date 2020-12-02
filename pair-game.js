@@ -11,3 +11,46 @@
 // A játéknak akkor van vége, amikor az összes kártya képes oldala látszik.
 // A számláló a játék végén megáll.
 // 5 másodperc múlva a számláló nullázódik, és az összes kártya visszafordul; kezdődhet egy új játék.
+
+'use strict';
+
+const cardPack = {
+    0: 'card--1', 1: 'card--2', 2: 'card--3', 3: 'card--4', 4: 'card--5',
+    5: 'card--1', 6: 'card--2', 7: 'card--3', 8: 'card--4', 9: 'card--5',
+    cards: '',
+    randomNumber(max) { return Math.floor(Math.random() * max) },
+    shuffle(n) {
+        while (n > 0) {
+            let card1 = this.randomNumber(10);
+            let card2 = this.randomNumber(10);
+            let temp = this[card1];
+            this[card1] = this[card2];
+            this[card2] = temp;
+            n -= 1;
+        }
+    },
+    show() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
+    hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
+    newArrangement() { this.shuffle(10); this.show(); },
+}
+
+cardPack.cards = document.querySelectorAll('.card');
+
+// const displayCardPack = (cards) => {
+//     cards.forEach((card, idx) => card.setAttribute('class', `card ${cardPack[idx]}`));
+// }
+
+// const hideCardPack = (cards) => {
+//     cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg'));
+//     // cards.forEach((card, idx) => console.log(card, `card ${cardPack[idx]}`));
+// }
+
+// const newArrangement = () => {
+//     cardPack.shuffle(10);
+//     displayCardPack(cards);
+// }
+
+const flipCard = (card) => {
+    card.getAttribute('class');
+
+}

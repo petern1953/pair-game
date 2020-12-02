@@ -32,7 +32,7 @@ body {
     font-size: 2.2rem;
 }
 
-.cards {
+.cardsOnBoard {
     display: flex;
     justify-content: space-between;
     /* flex-direction: row; */
@@ -48,4 +48,30 @@ body {
     height: 158px;
     border-radius: 5px;
     background-color: #fff;
+    box-shadow: 2px 2px 2px #555;
+    /* background-image: url(/img/cardBack.png); */
+}
+
+.card--bg {
+    background-image: url(/img/cardBack.png);
+}
+
+.card--1 {
+    background-image: url(/img/card1.png);
+}
+
+.card--2 {
+    background-image: url(/img/card2.png);
+}
+
+.card--3 {
+    background-image: url(/img/card3.png);
+}
+
+.card--4 {
+    background-image: url(/img/card4.png);
+}
+
+.card--5 {
+    background-image: url(/img/card5.png);
 }
