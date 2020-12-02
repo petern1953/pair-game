@@ -61,7 +61,7 @@ const cardPack = {
         let counter = 0;
         // const elapsedTime = new Date(1970, 1, 1, 0, 0, 0);
         // displayTime(timeNow.toTimeString('hu').slice(0, 8));
-        document.querySelector();
+        let clock = document.querySelector('.clock');
         this.intervalId = setInterval(() => {
             //     elapsedTime.setMilliseconds(counter * 1000);
             // let timeString = elapsedTime.toTimeString().substr(3, 5);
@@ -70,6 +70,7 @@ const cardPack = {
             // let timeString = `(${Math.floor((counter / 60) % 60).toString().padStart(2, 0)}):${(counter % 60)}`
             // let timeString = `${`${Math.floor((counter / 60) % 60)}`.padStart(2, 0)}:${(counter % 60).toString().padStart(2, 0)}`;
             let timeString = `${`${Math.floor((counter / 60) % 60)}`.padStart(2, 0)}:${`${(counter % 60)}`.padStart(2, 0)}`;
+            clock.textContent = timeString;
             console.log(timeString);
             counter++;
         }, 1000)
