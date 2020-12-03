@@ -40,7 +40,7 @@ const cardPack = {
     clicks: 0,
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
-    turnedPairNodes: [null, null],
+    // turnedPairNodes: [null, null],
     nullTurnedUpPair() { this.turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
     foundPairs: 0,
@@ -71,16 +71,14 @@ const cardPack = {
     },
     adminFlip(card) {
         if (this.firstFlip()) {
-            // toDO card in HTML itself is to save
             this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
             return;
         } else {
-            // toDO card in HTML itself is to save
             this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
-                this.foundPairs++; this.removeEventHandler();
+                this.foundPairs++; this.removeEventHandler(); this.fixPair();
             } else { this.flipCardsBack(); };
             this.nullTurnedUpPair();
         }
@@ -120,6 +118,8 @@ const cardPack = {
     // toDO ezt kijavítani, ha kell egyáltalán
     fixPair() {
         console.log(this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', 'card card--pair');
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', 'card card--pair');
     },
     intervalId: null,
     startCounter() {
