@@ -61,7 +61,7 @@ const cardPack = {
     flipCardsBack() { console.log('turn cards down'); this.hide(); /* setTimeout( function () { this.cardPack.hide() }, 1000 ); */ },
     // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
     // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
-    showOtherSideOfCard() {
+    showOtherSideOfCard(card) {
         if (this.turnedDown(card)) {
             card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
         } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
@@ -70,7 +70,8 @@ const cardPack = {
         const card = event.target;
         if (!this.started()) { this.startCounter(); console.log('counter started') }
         this.clicks += 1;
-        this.showOtherSideOfCard();
+        this.showOtherSideOfCard(card);
+        // ez volt a rági kód
         // if (this.turnedDown(card)) {
         //     card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
         // } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
