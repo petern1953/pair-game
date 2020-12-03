@@ -36,8 +36,12 @@ const cardPack = {
     hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     hide() {
         console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
-        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
-        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
+        // eventually made this code wrong
+        // document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
+        // document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
+        // fixed:
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--bg`);
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--bg`);
     },
     newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
@@ -88,9 +92,9 @@ const cardPack = {
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
-                this.foundPairs++; this.removeEventHandler(); this.fixPair();
+                this.foundPairs++; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
             } else { this.flipCardsBack(); };
-            this.nullTurnedUpPair();
+
         }
     },
     flipCard(event) {
@@ -176,7 +180,9 @@ cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
 // **************
 // cardPack.cards.forEach((card) => card.addEventListener('click', function (event) { cardPack.flipCard(event) }));
 
-function cardPackHide() { cardPack.hide() };
+// cardPack.nullTurnedUpPair() inserted here so as not to emptied befor cards are to hide
+function cardPackHide() { cardPack.hide(); cardPack.nullTurnedUpPair(); };
+
 function timedHide() { setTimeout(cardPackHide, 2000) };
 
 
