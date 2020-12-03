@@ -58,8 +58,8 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() { console.log('end of game') },
-    // flipCardsBack() { console.log('turn cards down'); setTimeout(cardPack.hide, 1000); },
-    flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
+    flipCardsBack() { console.log('turn cards down'); this.hide(); /* setTimeout( function () { this.cardPack.hide() }, 1000 ); */ },
+    // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
     // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
     flipCard(event) {
         const card = event.target;
@@ -74,14 +74,17 @@ const cardPack = {
             this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
-            if (this.pairFound()) { this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair(); };
+            if (this.pairFound()) {
+                this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair();
+            } else { this.flipCardsBack(); return };
         }
-        if (this.allPairsFound()) { this.endOfGame(); return }
+        if (this.allPairsFound()) { this.endOfGame(); return };
     },
     isPair() {
+        // toDO ezt kifejleszteni, ha kell egyáltalán
         return true;
     },
-    // toDO ezt kijavítani
+    // toDO ezt kijavítani, ha kell egyáltalán
     fixPair() {
         console.log(this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
     },
@@ -113,7 +116,3 @@ const newArrangement = () => {
     cardPack.shuffle(10);
     cardPack.show();
 }
-
-// hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
-// flipCardsBack() { console.log('turn cards down'); setTimeout(this.hide, 1000); },
-// flipCardsBack() { console.log('turn cards down'); setTimeout(cardPack.hide, 1000); },
