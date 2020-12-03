@@ -33,8 +33,9 @@ const cardPack = {
     showAll() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
     hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     hide() {
-        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card--pair ${this[idx]}`);
-        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card--pair ${this[idx]}`);
+        console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
     },
     newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
@@ -121,9 +122,13 @@ const cardPack = {
     },
     // toDO ezt kijavítani, ha kell egyáltalán
     fixPair() {
-        console.log(this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
-        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', 'card card--pair');
-        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', 'card card--pair');
+        console.log('Pairs#: ', this.turnedUpPair[0], this.turnedUpPair[1]);
+        console.log('Pairs: ', this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
+
+        // document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', 'card card--pair');
+        // document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', 'card card--pair');
     },
     intervalId: null,
     startCounter() {
