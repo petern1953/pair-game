@@ -30,9 +30,9 @@ const cardPack = {
             n -= 1;
         }
     },
-    show() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
+    showAll() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
     hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
-    newArrangement() { this.shuffle(10); this.show(); },
+    newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
         console.log(card.getAttribute('class').endsWith('bg'));
         return card.getAttribute('class').endsWith('bg');
@@ -54,8 +54,10 @@ const cardPack = {
         return this[this.turnedUpPair[0]] == this[this.turnedUpPair[1]];
     },
     removeEventHandler() {
-        this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
-        this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
+        // this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
+        // this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].removeEventListener('click', flipC);
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].removeEventListener('click', flipC);
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() { console.log('end of game') },
@@ -84,6 +86,7 @@ const cardPack = {
         }
     },
     flipCard(event) {
+        mouseEvent = event;
         const card = event.target;
         if (!this.started()) { this.startCounter(); console.log('counter started') }
         this.clicks += 1;
@@ -140,9 +143,15 @@ const cardPack = {
 
 cardPack.cards = document.querySelectorAll('.card');
 
-cardPack.cards.forEach((card) => card.addEventListener('click', (event) => cardPack.flipCard(event)));
+function flipC(event) {
+    cardPack.flipCard(event);
+}
+cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
+// cardPack.cards.forEach((card) => card.addEventListener('click', function (event) { cardPack.flipCard(event) }));
 
 const newArrangement = () => {
     cardPack.shuffle(10);
-    cardPack.show();
+    cardPack.showAll();
 }
+
+let mouseEvent;
