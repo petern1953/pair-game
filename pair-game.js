@@ -56,11 +56,11 @@ const cardPack = {
     },
     flipCard(event) {
         const card = event.target;
-        if (!this.started) {
-            this.startCounter();
-            // this.started = true;
-        }
+        if (!this.started) { this.startCounter(); }
         this.clicks += 1;
+        if (this.turnedDown(card)) {
+            card.setAttribute('class', `card ${this[card.dataset.n]}`);
+        } else { card.setAttribute('class', 'card card--bg'); }
         if (this.firstFlip) {
             this.turnedUpPair[0] = card;
         } else {
@@ -76,11 +76,6 @@ const cardPack = {
         // if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
         // }
         // this.clicks += 1;
-        if (this.turnedDown(card)) {
-            card.setAttribute('class', `card ${this[card.dataset.n]}`);
-        } else {
-            card.setAttribute('class', 'card card--bg');
-        }
     },
     isPair() {
         return true;
