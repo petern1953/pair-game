@@ -37,9 +37,10 @@ const cardPack = {
         console.log(card.getAttribute('class').endsWith('bg'));
         return card.getAttribute('class').endsWith('bg');
     },
-    started: false,
     clicks: 0,
+    started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
+    firstFlip() { return this.turnedUpPair[0] === null },
     flipCard(event) {
         if (!this.started) {
             this.startCounter();
