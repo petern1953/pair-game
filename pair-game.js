@@ -41,13 +41,28 @@ const cardPack = {
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
     firstFlip() { return this.turnedUpPair[0] === null },
+    pairFound() {
+        // temporarily
+        const p1 = this[this.turnedUpPair[0]];
+        const p2 = this[this.turnedUpPair[1]];
+        console.log(p1, p2);
+        // temp end
+        return this[this.turnedUpPair[0]] == this[this.turnedUpPair[1]];
+    },
     flipCard(event) {
+        const card = event.target;
         if (!this.started) {
             this.startCounter();
-            this.started = true;
+            // this.started = true;
         }
-        const card = event.target;
-
+        this.clicks += 1;
+        if (this.firstFlip) {
+            this.turnedUpPair[0] = card;
+        } else {
+            this.turnedUpPair[1] = card;
+            // toDO check from here on
+            if (pairFound()) { nullTurnedUpPair(); removeEventListener() }
+        }
         if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
             // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
             // ha másikra, össze kell hasonlítani
