@@ -31,7 +31,11 @@ const cardPack = {
         }
     },
     showAll() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
-    hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
+    hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
+    hide() {
+        document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card--pair ${this[idx]}`);
+        document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card--pair ${this[idx]}`);
+    },
     newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
         console.log(card.getAttribute('class').endsWith('bg'));
