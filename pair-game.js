@@ -40,10 +40,10 @@ const cardPack = {
     clicks: 0,
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
-    nullTurnedUpPair() { turnedUpPair = [null, null] },
+    nullTurnedUpPair() { this.turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
-    turnedUpPairs: 0,
-    allPairsFound() { return this.turnedUpPairs > 4; },
+    foundPairs: 0,
+    allPairsFound() { return this.foundPairs > 4; },
     pairFound() {
         // temporarily
         const p1 = this[this.turnedUpPair[0]];
@@ -56,8 +56,11 @@ const cardPack = {
         this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
         this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
     },
-    flippedBack() { return turnedUpPair[0] === turnedUpPair[1]; },
+    flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() { console.log('end of game') },
+    // flipCardsBack() { console.log('turn cards down'); setTimeout(cardPack.hide, 1000); },
+    flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
+    // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
     flipCard(event) {
         const card = event.target;
         if (!this.started()) { this.startCounter(); console.log('counter started') }
@@ -66,21 +69,14 @@ const cardPack = {
             card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
         } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
         if (this.firstFlip()) {
-            this.turnedUpPair[0] = card; console.log('first card into storage 0');
+            this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
         } else {
-            this.turnedUpPair[1] = card; console.log('second card into storage 1');
+            this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
-            if (this.pairFound()) { this.turnedUpPairs++; this.removeEventHandler(); this.nullTurnedUpPair(); };
+            if (this.pairFound()) { this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair(); };
         }
-        if (this.allPairsFound) thisEndOfGame();
-        // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
-        // ha másikra, össze kell hasonlítani
-        // ha egyeznek, le kell venni róluk az eventHandlert
-        //
-        // if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
-        // }
-        // this.clicks += 1;
+        if (this.allPairsFound()) { this.endOfGame(); return }
     },
     isPair() {
         return true;
@@ -118,3 +114,6 @@ const newArrangement = () => {
     cardPack.show();
 }
 
+// hide() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
+// flipCardsBack() { console.log('turn cards down'); setTimeout(this.hide, 1000); },
+// flipCardsBack() { console.log('turn cards down'); setTimeout(cardPack.hide, 1000); },
