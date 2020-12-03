@@ -61,13 +61,19 @@ const cardPack = {
     flipCardsBack() { console.log('turn cards down'); this.hide(); /* setTimeout( function () { this.cardPack.hide() }, 1000 ); */ },
     // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
     // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
+    showOtherSideOfCard() {
+        if (this.turnedDown(card)) {
+            card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
+        } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+    },
     flipCard(event) {
         const card = event.target;
         if (!this.started()) { this.startCounter(); console.log('counter started') }
         this.clicks += 1;
-        if (this.turnedDown(card)) {
-            card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
-        } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+        this.showOtherSideOfCard();
+        // if (this.turnedDown(card)) {
+        //     card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
+        // } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
         if (this.firstFlip()) {
             this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
         } else {
