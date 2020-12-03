@@ -42,6 +42,8 @@ const cardPack = {
     turnedUpPair: [null, null],
     nullTurnedUpPair() { turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
+    turnedUpPairs: 0,
+    allPairsFound() { return this.turnedUpPairs > 4; },
     pairFound() {
         // temporarily
         const p1 = this[this.turnedUpPair[0]];
@@ -54,21 +56,24 @@ const cardPack = {
         this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
         this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
     },
+    flippedBack() { return turnedUpPair[0] === turnedUpPair[1]; },
+    endOfGame() { console.log('end of game') },
     flipCard(event) {
         const card = event.target;
-        if (!this.started) { this.startCounter(); }
+        if (!this.started()) { this.startCounter(); console.log('counter started') }
         this.clicks += 1;
         if (this.turnedDown(card)) {
-            card.setAttribute('class', `card ${this[card.dataset.n]}`);
-        } else { card.setAttribute('class', 'card card--bg'); }
-        if (this.firstFlip) {
-            this.turnedUpPair[0] = card;
+            card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
+        } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+        if (this.firstFlip()) {
+            this.turnedUpPair[0] = card; console.log('first card into storage 0');
         } else {
-            this.turnedUpPair[1] = card;
+            this.turnedUpPair[1] = card; console.log('second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
-            if (this.pairFound()) { this.removeEventHandler(); this.nullTurnedUpPair(); return };
+            if (this.pairFound()) { this.turnedUpPairs++; this.removeEventHandler(); this.nullTurnedUpPair(); };
         }
+        if (this.allPairsFound) thisEndOfGame();
         // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
         // ha másikra, össze kell hasonlítani
         // ha egyeznek, le kell venni róluk az eventHandlert
