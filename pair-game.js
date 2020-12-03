@@ -66,15 +66,7 @@ const cardPack = {
             card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
         } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
     },
-    flipCard(event) {
-        const card = event.target;
-        if (!this.started()) { this.startCounter(); console.log('counter started') }
-        this.clicks += 1;
-        this.showOtherSideOfCard(card);
-        // ez volt a rági kód
-        // if (this.turnedDown(card)) {
-        //     card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
-        // } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+    adminFlip(card) {
         if (this.firstFlip()) {
             this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
         } else {
@@ -85,6 +77,32 @@ const cardPack = {
                 this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair();
             } else { this.flipCardsBack(); return };
         }
+    },
+    flipCard(event) {
+        const card = event.target;
+        if (!this.started()) { this.startCounter(); console.log('counter started') }
+        this.clicks += 1;
+        this.showOtherSideOfCard(card);
+        // ez volt a régi kód
+        // **********
+        // if (this.turnedDown(card)) {
+        //     card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
+        // } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+        // ********
+        this.adminFlip(card);
+        // ez volt a régi kód
+        // ********
+        // if (this.firstFlip()) {
+        //     this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
+        // } else {
+        //     this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
+        //     // toDO check from here on
+        //     if (this.flippedBack()) { this.nullTurnedUpPair(); return };
+        //     if (this.pairFound()) {
+        //         this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair();
+        //     } else { this.flipCardsBack(); return };
+        // }
+        // **********
         if (this.allPairsFound()) { this.endOfGame(); return };
     },
     isPair() {
