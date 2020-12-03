@@ -69,13 +69,15 @@ const cardPack = {
     adminFlip(card) {
         if (this.firstFlip()) {
             this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
+            return;
         } else {
             this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
-                this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair();
-            } else { this.flipCardsBack(); return };
+                this.foundPairs++; this.removeEventHandler();
+            } else { this.flipCardsBack(); };
+            this.nullTurnedUpPair();
         }
     },
     flipCard(event) {
