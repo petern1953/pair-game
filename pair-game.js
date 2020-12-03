@@ -23,9 +23,10 @@ const cardPack = {
         while (n > 0) {
             let card1 = this.randomNumber(10);
             let card2 = this.randomNumber(10);
-            let temp = this[card1];
-            this[card1] = this[card2];
-            this[card2] = temp;
+            // let temp = this[card1];
+            // this[card1] = this[card2];
+            // this[card2] = temp;
+            [this[card1], this[card2]] = [this[card2], this[card1]]
             n -= 1;
         }
     },
@@ -91,6 +92,6 @@ cardPack.cards.forEach((card) => card.addEventListener('click', (event) => cardP
 
 const newArrangement = () => {
     cardPack.shuffle(10);
-    // displayCardPack(cards);
+    cardPack.show();
 }
 
