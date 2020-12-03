@@ -14,6 +14,8 @@
 
 'use strict';
 
+
+// toDO: ha endOfGame, le kell állítani a countert
 const cardPack = {
     0: 'card--1', 1: 'card--2', 2: 'card--3', 3: 'card--4', 4: 'card--5',
     5: 'card--1', 6: 'card--2', 7: 'card--3', 8: 'card--4', 9: 'card--5',
@@ -65,7 +67,10 @@ const cardPack = {
         document.querySelectorAll('.card')[this.turnedUpPair[1]].removeEventListener('click', flipC);
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
-    endOfGame() { console.log('end of game') },
+    endOfGame() {
+        // toDO startNewGame()
+        console.log('end of game'); this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
+    },
     flipCardsBack() { console.log('turn cards down'); timedHide() },
     // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
     // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
@@ -147,6 +152,16 @@ const cardPack = {
     resetCounter() {
         let clock = document.querySelector('.clock');
         clock.textContent = '00:00';
+    },
+    startNewGame() {
+        // toDO check why the code not works correcly now after this was constructed
+        this.hideAll();
+        cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
+        this.resetCounter();
+        this.foundPairs = 0;
+        this.clicks = 0;
+        this.nullTurnedUpPair();
+        this.shuffle(10);
     }
 }
 
@@ -155,7 +170,10 @@ cardPack.cards = document.querySelectorAll('.card');
 function flipC(event) {
     cardPack.flipCard(event);
 }
+// originally this started the game
+// **************
 cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
+// **************
 // cardPack.cards.forEach((card) => card.addEventListener('click', function (event) { cardPack.flipCard(event) }));
 
 function cardPackHide() { cardPack.hide() };
@@ -168,3 +186,4 @@ const newArrangement = () => {
 }
 
 let mouseEvent;
+cardPack.startNewGame();
