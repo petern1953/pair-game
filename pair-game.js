@@ -40,6 +40,7 @@ const cardPack = {
     clicks: 0,
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
+    turnedPairNodes: [null, null],
     nullTurnedUpPair() { this.turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
     foundPairs: 0,
@@ -68,9 +69,11 @@ const cardPack = {
     },
     adminFlip(card) {
         if (this.firstFlip()) {
+            // toDO card in HTML itself is to save
             this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
             return;
         } else {
+            // toDO card in HTML itself is to save
             this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
             // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
