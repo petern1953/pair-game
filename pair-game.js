@@ -66,13 +66,15 @@ const cardPack = {
         } else {
             this.turnedUpPair[1] = card;
             // toDO check from here on
-            if (pairFound()) { removeEventHandler(); nullTurnedUpPair(); }
+            if (this.flippedBack()) { this.nullTurnedUpPair(); return };
+            if (this.pairFound()) { this.removeEventHandler(); this.nullTurnedUpPair(); return };
         }
-        if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
-            // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
-            // ha másikra, össze kell hasonlítani
-            // ha egyeznek, le kell venni róluk az eventHandlert
-        }
+        // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
+        // ha másikra, össze kell hasonlítani
+        // ha egyeznek, le kell venni róluk az eventHandlert
+        //
+        // if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
+        // }
         // this.clicks += 1;
         if (this.turnedDown(card)) {
             card.setAttribute('class', `card ${this[card.dataset.n]}`);
