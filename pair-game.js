@@ -40,6 +40,7 @@ const cardPack = {
     clicks: 0,
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
+    nullTurnedUpPair() { turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
     pairFound() {
         // temporarily
@@ -48,6 +49,10 @@ const cardPack = {
         console.log(p1, p2);
         // temp end
         return this[this.turnedUpPair[0]] == this[this.turnedUpPair[1]];
+    },
+    removeEventHandler() {
+        this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
+        this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
     },
     flipCard(event) {
         const card = event.target;
@@ -61,7 +66,7 @@ const cardPack = {
         } else {
             this.turnedUpPair[1] = card;
             // toDO check from here on
-            if (pairFound()) { nullTurnedUpPair(); removeEventListener() }
+            if (pairFound()) { removeEventHandler(); nullTurnedUpPair(); }
         }
         if (this.turnedUpPair[this.clicks % 2] == card.dataset.n) {
             // toDO ezt befejezni ha ugyanarra a kártyára kattint másodjára, nem kell ellenőrizni
