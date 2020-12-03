@@ -61,7 +61,7 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() { console.log('end of game') },
-    flipCardsBack() { console.log('turn cards down'); this.hide(); /* setTimeout( function () { this.cardPack.hide() }, 1000 ); */ },
+    flipCardsBack() { console.log('turn cards down'); timedHide() },
     // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
     // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
     showOtherSideOfCard(card) {
@@ -148,6 +148,10 @@ function flipC(event) {
 }
 cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
 // cardPack.cards.forEach((card) => card.addEventListener('click', function (event) { cardPack.flipCard(event) }));
+
+function cardPackHide() { cardPack.hide() };
+function timedHide() { setTimeout(cardPackHide, 2000) };
+
 
 const newArrangement = () => {
     cardPack.shuffle(10);
