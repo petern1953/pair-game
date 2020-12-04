@@ -1,0 +1,31 @@
+body {
+  perspective: 800px;
+}
+
+div {
+  width: 80px;
+  height: 80px;
+  background-color: skyblue;
+}
+
+.rotated {
+  background-color: pink;
+  animation-name: flip;
+  animation-duration: 2s;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes flip {
+    0% { 
+        transform: rotate3d(0, 1, 0, 5deg); 
+        background-color: skyblue; }
+    25% { 
+        transform: rotate3d(0, 1, 0, 105deg); 
+        background-color: skyblue; }
+    75% {
+        transform: rotate3d(0, 1, 0, 105deg); 
+        background-color: pink; }
+    100% {
+        transform: rotate3d(0, 1, 0, 5deg); 
+        background-color: pink; }
+}
