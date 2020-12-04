@@ -31,13 +31,13 @@ const cardPack = {
     // hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     hideAll() { this.cards.forEach((card) => card.setAttribute('class', 'card card--bg')); },
     hide() {
-        console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
+        // console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--bg`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--bg`);
     },
     newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
-        console.log(card.getAttribute('class').endsWith('bg'));
+        // console.log(card.getAttribute('class').endsWith('bg'));
         return card.getAttribute('class').endsWith('bg');
     },
     clicks: 0,
@@ -61,20 +61,30 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
-        console.log('end of game'); this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
+        // console.log('end of game');
+        this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
-    flipCardsBack() { console.log('turn cards down'); timedHide() },
+    flipCardsBack() {
+        // console.log('turn cards down');
+        timedHide();
+    },
     showOtherSideOfCard(card) {
         if (this.turnedDown(card)) {
-            card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
-        } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
+            card.setAttribute('class', `card ${this[card.dataset.n]}`);
+            // console.log('turned down card was');
+        } else {
+            card.setAttribute('class', 'card card--bg');
+            // console.log('face up card was');
+        }
     },
     adminFlip(card) {
         if (this.firstFlip()) {
-            this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
+            this.turnedUpPair[0] = card.dataset.n;
+            // console.log(card.dataset.n, 'first card into storage 0');
             return;
         } else {
-            this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
+            this.turnedUpPair[1] = card.dataset.n;
+            // console.log(card.dataset.n, 'second card into storage 1');
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
                 this.foundPairs++; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
@@ -84,7 +94,10 @@ const cardPack = {
     flipCard(event) {
         mouseEvent = event;
         const card = event.target;
-        if (!this.started()) { this.startCounter(); console.log('counter started') }
+        if (!this.started()) {
+            this.startCounter();
+            // console.log('counter started')
+        }
         this.clicks += 1;
         this.showOtherSideOfCard(card);
         this.adminFlip(card);
@@ -94,8 +107,8 @@ const cardPack = {
     //     return true;
     // },
     fixPair() {
-        console.log('Pairs#: ', this.turnedUpPair[0], this.turnedUpPair[1]);
-        console.log('Pairs: ', this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
+        // console.log('Pairs#: ', this.turnedUpPair[0], this.turnedUpPair[1]);
+        // console.log('Pairs: ', this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
     },
