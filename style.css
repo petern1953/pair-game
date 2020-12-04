@@ -83,3 +83,27 @@ body {
 .card--5 {
     background-image: url(/img/card5.png);
 }
+
+.flip--in {
+  background-color: pink;
+  animation-name: flip--in;
+  animation-duration: 2s;
+  animation-timing-function: ease-in;
+}
+
+.flip--out {
+  background-color: pink;
+  animation-name: flip--out;
+  animation-duration: 2s;
+  animation-timing-function: ease-out;
+}
+
+@keyframes flip--in {
+    0% { transform: rotate3d(0, 1, 0, 5deg); }
+    100% { transform: rotate3d(0, 1, 0, 105deg); }
+}
+
+    @keyframes flip--out {
+    0% { transform: rotate3d(0, 1, 0, 105deg); }
+    100% { transform: rotate3d(0, 1, 0, 5deg); }
+}
