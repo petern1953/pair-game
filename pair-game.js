@@ -29,7 +29,12 @@ const cardPack = {
     },
     showAll() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
     // hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
-    hideAll() { this.cards.forEach((card) => card.setAttribute('class', 'card card--bg')); },
+    hideAll() {
+        this.cards.forEach((card) => {
+            card.setAttribute('class', 'card card--bg flip--in');
+            setTimeout(function () { card.setAttribute('class', 'card card--bg flip--out'); }, 2000);
+        });
+    },
     hide() {
         // console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--bg`);

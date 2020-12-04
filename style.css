@@ -87,7 +87,7 @@ body {
 .flip--in {
   background-color: pink;
   animation-name: flip--in;
-  animation-duration: 2s;
+  animation-duration: 2000ms;
   animation-timing-function: ease-in;
 }
 
@@ -103,7 +103,7 @@ body {
     100% { transform: rotate3d(0, 1, 0, 105deg); }
 }
 
-    @keyframes flip--out {
+@keyframes flip--out {
     0% { transform: rotate3d(0, 1, 0, 105deg); }
     100% { transform: rotate3d(0, 1, 0, 5deg); }
 }
