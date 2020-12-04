@@ -70,13 +70,27 @@ const cardPack = {
     },
     showOtherSideOfCard(card) {
         if (this.turnedDown(card)) {
+            // orig start
+            // console.log('class: ', `${this[card.dataset.n]}`)
             // card.setAttribute('class', `card ${this[card.dataset.n]}`);
+            // orig end
+            // 12.04 start
+            // const c = card, o = `${this[card.dataset.n]}`;
+            // console.log('c: ', c, 'o: ', o);
             card.classList.add('flip--in');
             card.setAttribute('class', `card ${this[card.dataset.n]} flip--in`);
+            // c.classlist.replace('card--bg', `${this[card.dataset.n]}`);
             card.classList.replace('flip--in', 'flip--out');
+            // 12.04 end
             // console.log('turned down card was');
         } else {
-            card.setAttribute('class', 'card card--bg');
+            console.log('else ág 1', card.classList);
+            card.classList.toggle('flip--out', 'flip--in');
+            console.log('2', card.classList);
+            card.setAttribute('class', 'card card--bg flip--in');
+            console.log('3', card.classList);
+            card.classList.replace('flip--in', 'flip--out');
+            console.log('4', card.classList);
             // console.log('face up card was');
         }
     },
@@ -102,8 +116,8 @@ const cardPack = {
             // console.log('counter started')
         }
         this.clicks += 1;
-        this.showOtherSideOfCard(card);
         this.adminFlip(card);
+        this.showOtherSideOfCard(card);
         if (this.allPairsFound()) { this.endOfGame(); return };
     },
     // isPair() {
@@ -146,18 +160,17 @@ const cardPack = {
 
 cardPack.cards = document.querySelectorAll('.card');
 
-function flipC(event) { if (document.querySelectorAll('.flip--out').length !== 2) cardPack.flipCard(event); }
+function flipC(event) {
+    cardPack.flipCard(event);
+}
 // originally this started the game
 // **************
 cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
 // **************
-// cardPack.nullTurnedUpPair() inserted here so as not to emptied before cards are to hide
+// cardPack.nullTurnedUpPair() inserted here so as not to emptied befor cards are to hide
 function cardPackHide() { cardPack.hide(); cardPack.nullTurnedUpPair(); };
+
 function timedHide() { setTimeout(cardPackHide, 1000) };
-// 12.04
-// let ended;
-// function cardPackHide() { cardPack.hide(); ended = true; };
-// function timedHide() { ended = false; setTimeout(cardPackHide, 1000); if (ended) cardPack.nullTurnedUpPair(); };
 
 
 const newArrangement = () => {
