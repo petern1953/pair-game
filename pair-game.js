@@ -14,8 +14,6 @@
 
 'use strict';
 
-
-// toDO: ha endOfGame, le kell állítani a countert
 const cardPack = {
     0: 'card--1', 1: 'card--2', 2: 'card--3', 3: 'card--4', 4: 'card--5',
     5: 'card--1', 6: 'card--2', 7: 'card--3', 8: 'card--4', 9: 'card--5',
@@ -25,9 +23,6 @@ const cardPack = {
         while (n > 0) {
             let card1 = this.randomNumber(10);
             let card2 = this.randomNumber(10);
-            // let temp = this[card1];
-            // this[card1] = this[card2];
-            // this[card2] = temp;
             [this[card1], this[card2]] = [this[card2], this[card1]]
             n -= 1;
         }
@@ -36,10 +31,6 @@ const cardPack = {
     hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     hide() {
         console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
-        // eventually made this code wrong
-        // document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
-        // document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
-        // fixed:
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--bg`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--bg`);
     },
@@ -51,33 +42,27 @@ const cardPack = {
     clicks: 0,
     started() { return this.clicks !== 0; },
     turnedUpPair: [null, null],
-    // turnedPairNodes: [null, null],
     nullTurnedUpPair() { this.turnedUpPair = [null, null] },
     firstFlip() { return this.turnedUpPair[0] === null },
     foundPairs: 0,
     allPairsFound() { return this.foundPairs > 4; },
     pairFound() {
         // temporarily
-        const p1 = this[this.turnedUpPair[0]];
-        const p2 = this[this.turnedUpPair[1]];
-        console.log(p1, p2);
+        // const p1 = this[this.turnedUpPair[0]];
+        // const p2 = this[this.turnedUpPair[1]];
+        // console.log(p1, p2);
         // temp end
         return this[this.turnedUpPair[0]] == this[this.turnedUpPair[1]];
     },
     removeEventHandler() {
-        // this.turnedUpPair[0].removeEventListener('click', (event) => cardPack.flipCard(event));
-        // this.turnedUpPair[1].removeEventListener('click', (event) => cardPack.flipCard(event));
         document.querySelectorAll('.card')[this.turnedUpPair[0]].removeEventListener('click', flipC);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].removeEventListener('click', flipC);
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
-        // toDO startNewGame()
         console.log('end of game'); this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
     flipCardsBack() { console.log('turn cards down'); timedHide() },
-    // flipCardsBack() { console.log('turn cards down'); cardPack.hide(); },
-    // flipCardsBack() { setTimeout(function () { console.log(this, 'turn cards down'); }, 1000); },
     showOtherSideOfCard(card) {
         if (this.turnedDown(card)) {
             card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
@@ -89,12 +74,10 @@ const cardPack = {
             return;
         } else {
             this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
-            // toDO check from here on
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
                 this.foundPairs++; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
             } else { this.flipCardsBack(); };
-
         }
     },
     flipCard(event) {
@@ -103,41 +86,17 @@ const cardPack = {
         if (!this.started()) { this.startCounter(); console.log('counter started') }
         this.clicks += 1;
         this.showOtherSideOfCard(card);
-        // ez volt a régi kód
-        // **********
-        // if (this.turnedDown(card)) {
-        //     card.setAttribute('class', `card ${this[card.dataset.n]}`); console.log('turned down card was');
-        // } else { card.setAttribute('class', 'card card--bg'); console.log('face up card was'); }
-        // ********
         this.adminFlip(card);
-        // ez volt a régi kód
-        // ********
-        // if (this.firstFlip()) {
-        //     this.turnedUpPair[0] = card.dataset.n; console.log(card.dataset.n, 'first card into storage 0');
-        // } else {
-        //     this.turnedUpPair[1] = card.dataset.n; console.log(card.dataset.n, 'second card into storage 1');
-        //     // toDO check from here on
-        //     if (this.flippedBack()) { this.nullTurnedUpPair(); return };
-        //     if (this.pairFound()) {
-        //         this.foundPairs++; this.removeEventHandler(); this.nullTurnedUpPair();
-        //     } else { this.flipCardsBack(); return };
-        // }
-        // **********
         if (this.allPairsFound()) { this.endOfGame(); return };
     },
-    isPair() {
-        // toDO ezt kifejleszteni, ha kell egyáltalán
-        return true;
-    },
-    // toDO ezt kijavítani, ha kell egyáltalán
+    // isPair() {
+    //     return true;
+    // },
     fixPair() {
         console.log('Pairs#: ', this.turnedUpPair[0], this.turnedUpPair[1]);
         console.log('Pairs: ', this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
-
-        // document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', 'card card--pair');
-        // document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', 'card card--pair');
     },
     intervalId: null,
     startCounter() {
@@ -158,7 +117,6 @@ const cardPack = {
         clock.textContent = '00:00';
     },
     startNewGame() {
-        // toDO check why the code not works correcly now after this was constructed
         this.hideAll();
         cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
         this.resetCounter();
@@ -178,12 +136,10 @@ function flipC(event) {
 // **************
 cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
 // **************
-// cardPack.cards.forEach((card) => card.addEventListener('click', function (event) { cardPack.flipCard(event) }));
-
 // cardPack.nullTurnedUpPair() inserted here so as not to emptied befor cards are to hide
 function cardPackHide() { cardPack.hide(); cardPack.nullTurnedUpPair(); };
 
-function timedHide() { setTimeout(cardPackHide, 2000) };
+function timedHide() { setTimeout(cardPackHide, 1000) };
 
 
 const newArrangement = () => {
