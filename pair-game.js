@@ -139,8 +139,8 @@ const message = {
     choose: 'CHOOSE A CARD BY CLICKING ON IT',
     chooseAnother: 'CLICK TO ANOTHER ONE',
     fail: 'FAILED. TRY AGAIN!',
-    success: 'PAIR FOUND. WELL DONE!',
-    endOfGame: 'END OF GAME. TRY A NEW ONE',
+    success: 'PAIR FOUND. WELL DONE! GO ON!',
+    endOfGame: 'END OF GAME. TRY A NEW ONE. WAIT... I\'M SHUFFLING...',
 };
 
 const send = (msg) => {
