@@ -28,16 +28,13 @@ const cardPack = {
         }
     },
     showAll() { this.cards.forEach((card, idx) => card.setAttribute('class', `card ${this[idx]}`)); },
-    // hideAll() { this.cards.forEach((card, idx) => card.setAttribute('class', 'card card--bg')); },
     hideAll() { this.cards.forEach((card) => card.setAttribute('class', 'card card--bg')); },
     hide() {
-        // console.log(`card card--pair ${this[this.turnedUpPair[0]]}`, this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--bg`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--bg`);
     },
     newArrangement() { this.shuffle(10); this.showAll(); },
     turnedDown(card) {
-        // console.log(card.getAttribute('class').endsWith('bg'));
         return card.getAttribute('class').endsWith('bg');
     },
     clicks: 0,
@@ -48,11 +45,6 @@ const cardPack = {
     foundPairs: 0,
     allPairsFound() { return this.foundPairs > 4; },
     pairFound() {
-        // temporarily
-        // const p1 = this[this.turnedUpPair[0]];
-        // const p2 = this[this.turnedUpPair[1]];
-        // console.log(p1, p2);
-        // temp end
         return this[this.turnedUpPair[0]] == this[this.turnedUpPair[1]];
     },
     removeEventHandler() {
@@ -61,36 +53,29 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
-        // console.log('end of game');
         this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
     flipCardsBack() {
-        // console.log('turn cards down');
         timedHide();
     },
     showOtherSideOfCard(card) {
         if (this.turnedDown(card)) {
-            // card.setAttribute('class', `card ${this[card.dataset.n]}`);
             card.classList.add('flip--in');
             card.setAttribute('class', `card ${this[card.dataset.n]} flip--in`);
             card.classList.replace('flip--in', 'flip--out');
-            // console.log('turned down card was');
         } else {
             card.setAttribute('class', 'card card--bg');
-            // console.log('face up card was');
         }
     },
     adminFlip(card) {
         if (this.firstFlip()) {
             this.turnedUpPair[0] = card.dataset.n;
-            // console.log(card.dataset.n, 'first card into storage 0');
             return;
         } else {
             this.turnedUpPair[1] = card.dataset.n;
-            // console.log(card.dataset.n, 'second card into storage 1');
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
-                this.foundPairs++; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
+                this.foundPairs += 1; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
             } else { this.flipCardsBack(); };
         }
     },
@@ -99,19 +84,13 @@ const cardPack = {
         const card = event.target;
         if (!this.started()) {
             this.startCounter();
-            // console.log('counter started')
         }
         this.clicks += 1;
         this.showOtherSideOfCard(card);
         this.adminFlip(card);
         if (this.allPairsFound()) { this.endOfGame(); return };
     },
-    // isPair() {
-    //     return true;
-    // },
     fixPair() {
-        // console.log('Pairs#: ', this.turnedUpPair[0], this.turnedUpPair[1]);
-        // console.log('Pairs: ', this[this.turnedUpPair[0]], this[this.turnedUpPair[1]]);
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
         document.querySelectorAll('.card')[this.turnedUpPair[1]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[1]]}`);
     },
@@ -122,9 +101,8 @@ const cardPack = {
         this.intervalId = setInterval(() => {
             let timeString = `${`${Math.floor((counter / 60) % 60)}`.padStart(2, 0)}:${`${(counter % 60)}`.padStart(2, 0)}`;
             clock.textContent = timeString;
-            counter++;
+            counter += 1;
         }, 1000)
-
     },
     stopCounter() {
         clearInterval(this.intervalId);
@@ -147,18 +125,11 @@ const cardPack = {
 cardPack.cards = document.querySelectorAll('.card');
 
 function flipC(event) { if (document.querySelectorAll('.flip--out').length !== 2) cardPack.flipCard(event); }
-// originally this started the game
-// **************
+
 cardPack.cards.forEach((card) => card.addEventListener('click', flipC));
-// **************
-// cardPack.nullTurnedUpPair() inserted here so as not to emptied before cards are to hide
+
 function cardPackHide() { cardPack.hide(); cardPack.nullTurnedUpPair(); };
 function timedHide() { setTimeout(cardPackHide, 1000) };
-// 12.04
-// let ended;
-// function cardPackHide() { cardPack.hide(); ended = true; };
-// function timedHide() { ended = false; setTimeout(cardPackHide, 1000); if (ended) cardPack.nullTurnedUpPair(); };
-
 
 const newArrangement = () => {
     cardPack.shuffle(10);
