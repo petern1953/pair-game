@@ -53,6 +53,7 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
+        send(message.endOfGame);
         this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
     flipCardsBack() {
@@ -69,14 +70,19 @@ const cardPack = {
     },
     adminFlip(card) {
         if (this.firstFlip()) {
+            send(message.chooseAnother);
             this.turnedUpPair[0] = card.dataset.n;
             return;
         } else {
             this.turnedUpPair[1] = card.dataset.n;
             if (this.flippedBack()) { this.nullTurnedUpPair(); return };
             if (this.pairFound()) {
+                send(message.success);
                 this.foundPairs += 1; this.removeEventHandler(); this.fixPair(); this.nullTurnedUpPair();
-            } else { this.flipCardsBack(); };
+            } else {
+                send(message.fail);
+                this.flipCardsBack();
+            };
         }
     },
     flipCard(event) {
@@ -88,7 +94,10 @@ const cardPack = {
         this.clicks += 1;
         this.showOtherSideOfCard(card);
         this.adminFlip(card);
-        if (this.allPairsFound()) { this.endOfGame(); return };
+        if (this.allPairsFound()) {
+            this.endOfGame();
+            return;
+        };
     },
     fixPair() {
         document.querySelectorAll('.card')[this.turnedUpPair[0]].setAttribute('class', `card card--pair ${this[this.turnedUpPair[0]]}`);
@@ -119,23 +128,23 @@ const cardPack = {
         this.clicks = 0;
         this.nullTurnedUpPair();
         this.shuffle(10);
-        send.message(clickToBegin);
+        send(message.clickToBegin);
     },
 }
 
-const instruction = document.querySelector('.message');
+const instruction = document.querySelector('.instruction');
 
 const message = {
     clickToBegin: 'CLICK ANY CARD TO BEGIN',
     choose: 'CHOOSE A CARD BY CLICKING ON IT',
     chooseAnother: 'CLICK TO ANOTHER ONE',
-    failed: 'FAILED. TRY AGAIN!',
+    fail: 'FAILED. TRY AGAIN!',
     success: 'PAIR FOUND. WELL DONE!',
     endOfGame: 'END OF GAME. TRY A NEW ONE',
 };
 
 const send = (msg) => {
-    instruction.textContent = message.msg;
+    instruction.textContent = msg;
 };
 
 cardPack.cards = document.querySelectorAll('.card');
