@@ -107,3 +107,12 @@ body {
     50% { transform: rotate3d(0, 1, 0, 90deg); };
     100% { transform: rotate3d(0, 1, 0, 0deg); };
 }
+
+.instruction {
+    transition: transform 2s;
+    transform-style: preserve-3d;
+}
+
+.rotated {
+    transform: rotateY(360deg);
+}

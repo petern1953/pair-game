@@ -53,7 +53,7 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
-        send(message.endOfGame);
+        send(message.endOfGame); instruction.classList.toggle('rotated');
         this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
     flipCardsBack() {
