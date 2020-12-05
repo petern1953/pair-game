@@ -119,8 +119,24 @@ const cardPack = {
         this.clicks = 0;
         this.nullTurnedUpPair();
         this.shuffle(10);
-    }
+        send.message(clickToBegin);
+    },
 }
+
+const instruction = document.querySelector('.message');
+
+const message = {
+    clickToBegin: 'CLICK ANY CARD TO BEGIN',
+    choose: 'CHOOSE A CARD BY CLICKING ON IT',
+    chooseAnother: 'CLICK TO ANOTHER ONE',
+    failed: 'FAILED. TRY AGAIN!',
+    success: 'PAIR FOUND. WELL DONE!',
+    endOfGame: 'END OF GAME. TRY A NEW ONE',
+};
+
+const send = (msg) => {
+    instruction.textContent = message.msg;
+};
 
 cardPack.cards = document.querySelectorAll('.card');
 
