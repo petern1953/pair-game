@@ -5,12 +5,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>rotation along y axis</title>
-    <link rel="stylesheet" href="/temp.css">
+    <!-- <link rel="stylesheet" href="/temp.css"> -->
+    <style>
+        div {
+            box-sizing: border-box;
+            height: 166px;
+            width: 120px;
+            border: 0px;
+            border-radius: 5px;
+            margin: 5px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 2s;
+            transform-style: preserve-3d;
+        }
+
+        .front {
+            background-color: red;
+            transform: rotateY(0deg);
+        }
+
+        .back {
+            background-color: green;
+            transform: rotateY(180deg);
+        }
+
+        .front,
+        .back {
+            backface-visibility: hidden;
+            position: absolute;
+        }
+
+        .front.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .back.flipped {
+            transform: rotateY(0deg);
+        }
+
+        button {
+            position: relative;
+            top: 200px;
+        }
+    </style>
 </head>
 
 <body>
-    <div>Normal</div>
-    <div class="rotated">Rotated</div>
+    <div class="front">Front</div>
+    <div class="back">Back</div>
+    <button onclick="flip()">Click to flip cards</button>
+
+    <script>
+        const cards = document.querySelectorAll('div');
+
+
+        const flip = () => {
+            cards.forEach((card) => { card.classList.toggle('flipped'); console.log(card.classList) });
+        } 
+    </script>
 </body>
 
 </html>
