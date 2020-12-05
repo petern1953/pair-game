@@ -53,7 +53,8 @@ const cardPack = {
     },
     flippedBack() { return this.turnedUpPair[0] === this.turnedUpPair[1]; },
     endOfGame() {
-        send(message.endOfGame); instruction.classList.toggle('rotated');
+        send(message.endOfGame);
+        instruction.classList.toggle('rotated'); board.classList.toggle('rotated');
         this.stopCounter(); setTimeout(function () { cardPack.startNewGame() }, 5000);
     },
     flipCardsBack() {
@@ -148,6 +149,7 @@ const send = (msg) => {
 };
 
 cardPack.cards = document.querySelectorAll('.card');
+const board = document.querySelector('.cardsOnBoard');
 
 function flipC(event) { if (document.querySelectorAll('.flip--out').length !== 2) cardPack.flipCard(event); }
 

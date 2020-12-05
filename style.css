@@ -108,7 +108,7 @@ body {
     100% { transform: rotate3d(0, 1, 0, 0deg); };
 }
 
-.instruction {
+.instruction, .cardsOnBoard {
     transition: transform 2s;
     transform-style: preserve-3d;
 }
